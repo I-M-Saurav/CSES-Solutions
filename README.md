@@ -32,7 +32,7 @@ CSES-Solutions/
 
 | Section                 | Solved | Total |
 |-------------------------|--------|-------|
-| Introductory Problems   | 0      | 19    |
+| Introductory Problems   | 11      | 19    |
 | Sorting and Searching   | 0      | 12    |
 | Dynamic Programming     | 0      | 19    |
 | Graph Algorithms        | 0      | 20    |
