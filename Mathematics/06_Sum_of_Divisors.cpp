@@ -33,6 +33,14 @@ ll modularBinaryExponentiation(int base, int exponent)
     }
     return (result * result) % mod;
 }
+// The first approach is brute force where we can iterate from 1 to n and for each i we can find divisors in sqrt(i) and then sum it.
+// Time complexiety will be O(n*root(n)), since n<=1e12, this will not pass
+// next we can see that from 1 to n how many times i will come, it will be equal to (n/i) times and then it's contrubution to the 
+// sum will be (n/i)*i , So, the answer will be summation i = 1  to n (n/i)*i;
+// Time compllexiety will be O(n), better but it will not pass again as n<=1e12;
+// now we can observe that n/i can have only 2*root(n) distinct values ---> break the segmant in two part [1, root(n)] --> this can have at most root(n) and then 
+// other segment [root(n)+1, n] this can have root(n) as val of n/i for this will be <=root(n)
+// now we will iterate the starting values of all the segment and then find the sum of segment and multiply it with q to have it's contribution.
 
 void solve()
 {
@@ -41,12 +49,12 @@ void solve()
     ll ans = 0;
     for (ll i = 1, j; i <= n; i = j)
     {
-        ll q = n / i;
-        j = n / q + 1;
+        ll q = n / i; // this is the n/i value stored in q
+        j = n / q + 1; // this is next value of i, starting point of next segment
         ll rangeSumUptoJminus1 = ((((j % mod) * ((j - 1) % mod)) % mod) * modularBinaryExponentiation(2, mod - 2)) % mod;
         ll rangeSumUptoIminus1 = ((((i % mod) * ((i - 1) % mod)) % mod) * modularBinaryExponentiation(2, mod - 2)) % mod;
-        ll rangeWithQ = (rangeSumUptoJminus1 - rangeSumUptoIminus1 + mod) % mod;
-        ans = (ans + (q % mod) * rangeWithQ) % mod;
+        ll rangeWithQ = (rangeSumUptoJminus1 - rangeSumUptoIminus1 + mod) % mod;// sum of the current segment from i to j-1.
+        ans = (ans + (q % mod) * rangeWithQ) % mod;// multiply the sum with q to get the contribution of this segment and then add it to answer.
     }
     cout << ans << "\n";
     return;
